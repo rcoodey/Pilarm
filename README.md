@@ -18,5 +18,19 @@ There is a lot of information out there about setting up a Raspberry Pi, so just
 3. Install library for working with GPIO pins: sudo apt-get -y install python3-rpi.gpio
 4. Install library for sending HTTP requests: sudo apt-get -y install python3-requests
 
+## Setting up SmartThings
+1. Browse to https://graph.api.smartthings.com/ and login with your SmartThings account
+2. On the top menu, click "My SmartApps"
+3. In the upper right, click "Settings"
+4. Add a new Github repositiry with Owner = "rcoodey", name = "Pilarm" and Branch = "master"
+More steps coming soon...
+
 ## Setting up Pilarm Server
+1. Install Git: sudo apt-get -y install git-core
+2. Download Pilarm Server files: git clone https://github.com/rcoodey/Pilarm
+3. Make Python script executable: chmod 755 PilarmServer.py
+4. Make shell script executable: chmod 755 PilarmServer.sh
+More steps coming soon...
+
+## Setting up GPIO pins
 Coming soon...
