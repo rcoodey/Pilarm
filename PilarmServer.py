@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import RPi.GPIO as GPIO 
+import os
 import configparser 
 import time 
 import requests 
@@ -9,8 +10,9 @@ import threading
 from http.server import BaseHTTPRequestHandler
 
 #Open configuration file
-config = configparser.ConfigParser() 
-config.read('PilarmServer.conf')
+config = configparser.ConfigParser()
+script_dir = os.path.dirname(__file__) 
+config.read(os.path.join(script_dir, 'PilarmServer.conf'))
 
 #Get SmartThings settings
 smartthings_application_id = config.get('SmartThings', 'application_id') 
@@ -21,16 +23,18 @@ smartthings_zone_event_url = smartthings_event_url.format("pilarm", "zoneEvent/{
 smartthings_all_zones_event_url = smartthings_event_url.format("pilarm", "allZonesEvent")
 
 #Get Pilarm settings and configure logging
-gpio_zones = map(int, config.get('Pilarm', 'gpio_zones').split(','))
+gpio_zones = list(map(int, config.get('Pilarm', 'gpio_zones').split(',')))
 log_file = config.get('Pilarm', 'log_file') 
-logging.basicConfig(filename=log_file, filemode='a', format="%(asctime)s %(levelname)s %(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=logging.INFO) 
+logging.basicConfig(filename=log_file, filemode='a', format="%(asctime)s %(levelname)s %(message)s", datefmt="%m-%d-%y %H:%M:%S", level=logging.INFO) 
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 
 #Handler for GPIO events
 def gpio_handler(zone):
     try:
         requests.get(smartthings_zone_event_url.format(GPIO.input(zone), zone))
-        print('Zone ' + str(zone) + ' ' + ('opened' if GPIO.input(zone) else 'closed'))
+        message = 'Zone ' + str(zone) + ' ' + ('opened' if GPIO.input(zone) else 'closed')
+        print(message)
+        logging.info(message)
     except Exception as e:
         logging.exception("Error processing GPIO event: " + str(e))
 
