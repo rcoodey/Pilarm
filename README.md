@@ -18,7 +18,20 @@ There is a lot of information out there about setting up a Raspberry Pi, so just
 3. Install library for working with GPIO pins: sudo apt-get -y install python3-rpi.gpio
 4. Install library for sending HTTP requests: sudo apt-get -y install python3-requests
 
-## Setting up SmartThings
+## Setting up SmartThings Devices
+1. Browse to https://graph.api.smartthings.com/ and login with your SmartThings account
+2. On the top menu, click "My Device Handlers"
+3. In the upper right, click "Settings"
+4. Add a new Github repositiry with Owner = "rcoodey", name = "Pilarm" and Branch = "master"
+5. In the upper right, click "Update from Repo" and choose "Pilarm"
+6. Under the "New" section, check "devicetypes/rcoodey/pilarm-zone.src/pilarm-zone.groovy", check the "Publish" box and click "Execute Update"
+7. On the top menu, click "My Devices"
+8. In the upper right, click "+ New Device" and fill out the required items:
+  * For "Device Network Id" enter "PilarmZone" followed by the GPIO number (ex. PilarmZone23)
+  * For "Type" choose the newly added device type "Pilarm Zone"
+9. Click "Create" and repeat for each door, window or other contact
+
+## Setting up SmartThings SmartApp
 1. Browse to https://graph.api.smartthings.com/ and login with your SmartThings account
 2. On the top menu, click "My SmartApps"
 3. In the upper right, click "Settings"
