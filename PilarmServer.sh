@@ -1,7 +1,7 @@
 #!/bin/sh
 
-COMMAND="python3 /home/pi/PilarmServer.py"
-LOGFILE="/home/pi/PilarmServerRestart.log"
+COMMAND="python3 /home/pi/Pilarm/PilarmServer.py"
+LOGFILE="/home/pi/Pilarm/PilarmServerRestart.log"
 
 #exec 2> /home/pi/debug.log  # send stderr to a log file
 #exec 1>&2                   # send stdout to the same log file
