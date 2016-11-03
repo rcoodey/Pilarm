@@ -60,7 +60,7 @@ There is a lot of information out there about setting up a Raspberry Pi, so just
 
 ## Setting up Pilarm Server
 1. Install Git: sudo apt-get -y install git-core
-2. Download Pilarm Server files: git clone https://github.com/rcoodey/Pilarm
+2. Download Pilarm Server files: git clone https://github.com/rcoodey/Pilarm.git
 3. Make Python script executable: chmod 755 PilarmServer.py
 4. Make shell script executable: chmod 755 PilarmServer.sh
 5. Update settings in config file: nano PilarmServer.conf
