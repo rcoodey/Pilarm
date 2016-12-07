@@ -1,4 +1,4 @@
-﻿# Pilarm
+# Pilarm
 Integrate existing door or window contact sensors with SmartThings using a Raspberry Pi or C.H.I.P.
 
 ## Setting up SmartThings Devices
@@ -52,10 +52,12 @@ There is a lot of information out there about setting up a Raspberry Pi, so just
   * Second to a resistor (~10k for pull-up)
 4. Connect the resistor to 3V3
 
-![alt tag](https://github.com/rcoodey/Pilarm/raw/master/images/AlarmBox.jpg)
-![alt tag](https://github.com/rcoodey/Pilarm/raw/master/images/BoardCenter.jpg)
-![alt tag](https://github.com/rcoodey/Pilarm/raw/master/images/BoardLeft.jpg)
-![alt tag](https://github.com/rcoodey/Pilarm/raw/master/images/BoardRight.jpg)
+<p align="center">
+<img src="https://github.com/rcoodey/Pilarm/raw/master/images/AlarmBox.jpg" width="100" />
+<img src="https://github.com/rcoodey/Pilarm/raw/master/images/BoardCenter.jpg" width="100" />
+<img src="https://github.com/rcoodey/Pilarm/raw/master/images/BoardLeft.jpg" width="100" />
+<img src="https://github.com/rcoodey/Pilarm/raw/master/images/BoardRight.jpg" width="100" />
+</p>
 
 ## Setting up Python
 1. Update apt-get: sudo apt-get update
