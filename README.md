@@ -15,6 +15,8 @@ Integrate existing door or window contact sensors with SmartThings using a Raspb
 9. Click "Create" and repeat for each door, window or other contact
 
 ## Setting up SmartThings SmartApp
+For the below steps be aware that different accounts use different URLs (shards). Please see <a href="https://community.smartthings.com/t/faq-how-to-find-out-what-shard-cloud-slice-ide-url-your-account-location-is-on/53923">FAQ: How to find out what “shard” (cloud slice IDE URL) your Account / Location is on?</a> for additional details and substitute the appropriate URL below.
+
 1. Browse to https://graph.api.smartthings.com/ and login with your SmartThings account
 2. On the top menu, click "My SmartApps"
 3. In the upper right, click "Settings"
