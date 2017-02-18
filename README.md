@@ -1,6 +1,10 @@
 # Pilarm
 Integrate existing door or window contact sensors with SmartThings using a Raspberry Pi or C.H.I.P.
 
+# A note about the different "shards"
+
+For the below steps be aware that different accounts use different URLs (shards). Please see <a href="https://community.smartthings.com/t/faq-how-to-find-out-what-shard-cloud-slice-ide-url-your-account-location-is-on/53923">FAQ: How to find out what “shard” (cloud slice IDE URL) your Account / Location is on?</a> for additional details and substitute the appropriate URL below.
+
 ## Setting up SmartThings Devices
 1. Browse to https://graph.api.smartthings.com/ and login with your SmartThings account
 2. On the top menu, click "My Device Handlers"
@@ -15,7 +19,6 @@ Integrate existing door or window contact sensors with SmartThings using a Raspb
 9. Click "Create" and repeat for each door, window or other contact
 
 ## Setting up SmartThings SmartApp
-For the below steps be aware that different accounts use different URLs (shards). Please see <a href="https://community.smartthings.com/t/faq-how-to-find-out-what-shard-cloud-slice-ide-url-your-account-location-is-on/53923">FAQ: How to find out what “shard” (cloud slice IDE URL) your Account / Location is on?</a> for additional details and substitute the appropriate URL below.
 
 1. Browse to https://graph.api.smartthings.com/ and login with your SmartThings account
 2. On the top menu, click "My SmartApps"
@@ -34,6 +37,10 @@ For the below steps be aware that different accounts use different URLs (shards)
 14. The last item needed is the "SmartApp Id" which can be found from: https://graph.api.smartthings.com/api/smartapps/installations
   * In the JSON formatted text search for the "label" with name "Pilarm", just before this should be the "id"
   * Save this id for later use in the Pilarm Server config
+
+## PilarmServer.py
+
+If you're not on the main na shard, you might need to edit the URL in the PilarmServer.conf to reflect this, rather than using https://graph.api.smartthings.com/
 
 ## Getting started with Raspberry Pi
 There is a lot of information out there about setting up a Raspberry Pi, so just a few high level details here.
