@@ -1,6 +1,10 @@
 # Pilarm
 Integrate existing door or window contact sensors with SmartThings using a Raspberry Pi or C.H.I.P.
 
+## A note about the different "shards"
+
+For the below steps be aware that different accounts use different URLs (shards). Please see <a href="https://community.smartthings.com/t/faq-how-to-find-out-what-shard-cloud-slice-ide-url-your-account-location-is-on/53923">FAQ: How to find out what “shard” (cloud slice IDE URL) your Account / Location is on?</a> for additional details and substitute the appropriate URL below.
+
 ## Setting up SmartThings Devices
 1. Browse to https://graph.api.smartthings.com/ and login with your SmartThings account
 2. On the top menu, click "My Device Handlers"
@@ -15,6 +19,7 @@ Integrate existing door or window contact sensors with SmartThings using a Raspb
 9. Click "Create" and repeat for each door, window or other contact
 
 ## Setting up SmartThings SmartApp
+
 1. Browse to https://graph.api.smartthings.com/ and login with your SmartThings account
 2. On the top menu, click "My SmartApps"
 3. In the upper right, click "Settings"
@@ -52,11 +57,22 @@ There is a lot of information out there about setting up a Raspberry Pi, so just
   * Second to a resistor (~10k for pull-up)
 4. Connect the resistor to 3V3
 
+<p align="center">
+<img src="https://github.com/rcoodey/Pilarm/raw/master/images/AlarmBox.jpg" width="100" />
+<img src="https://github.com/rcoodey/Pilarm/raw/master/images/BoardCenter.jpg" width="100" />
+<img src="https://github.com/rcoodey/Pilarm/raw/master/images/BoardLeft.jpg" width="100" />
+<img src="https://github.com/rcoodey/Pilarm/raw/master/images/BoardRight.jpg" width="100" />
+</p>
+
 ## Setting up Python
 1. Update apt-get: sudo apt-get update
 2. Install Python 3: sudo apt-get -y install python3
 3. Install library for working with GPIO pins: sudo apt-get -y install python3-rpi.gpio
 4. Install library for sending HTTP requests: sudo apt-get -y install python3-requests
+
+## PilarmServer.py
+
+If you're not on the main na shard, you might need to edit the URL in the PilarmServer.conf to reflect this, rather than using https://graph.api.smartthings.com/
 
 ## Setting up Pilarm Server
 1. Install Git: sudo apt-get -y install git-core
