@@ -14,7 +14,7 @@ For the below steps be aware that different accounts use different URLs (shards)
 8. In the upper right, click "+ New Device" and fill out the required items:
   * For "Device Network Id" enter "PilarmZone" followed by the GPIO number (ex. PilarmZone23)
   * For "Type" choose the newly added device type "Pilarm Zone"
-9. Click "Create" and repeat for each door, window or other contact
+g9. Click "Create" and repeat for each door, window or other contact
 
 ## Setting up SmartThings SmartApp
 1. Browse to https://graph.api.smartthings.com/ and login with your SmartThings account2. On the top menu, click "My SmartApps"
@@ -54,7 +54,7 @@ There is a lot of information out there about setting up a Raspberry Pi, so just
 4. Connect the resistor to 3V3
 
 <p align="center">
-<img src="https://github.com/rcoodey/Pilarm/raw/master/images/CircuitDiagram.jpg" width="100" />
+<img src="https://github.com/rcoodey/Pilarm/raw/master/images/CircuitDiagram.png" width="100" />
 <img src="https://github.com/rcoodey/Pilarm/raw/master/images/AlarmBox.jpg" width="100" />
 <img src="https://github.com/rcoodey/Pilarm/raw/master/images/BoardCenter.jpg" width="100" />
 <img src="https://github.com/rcoodey/Pilarm/raw/master/images/BoardLeft.jpg" width="100" />
