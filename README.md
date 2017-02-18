@@ -7,9 +7,7 @@ For the below steps be aware that different accounts use different URLs (shards)
 
 ## Setting up SmartThings Devices
 1. Browse to https://graph.api.smartthings.com/ and login with your SmartThings account
-2. On the top menu, click "My Device Handlers"
-3. In the upper right, click "Settings"
-4. Add a new Github repository with Owner = "rcoodey", name = "Pilarm" and Branch = "master"
+2. On the top menu, click "My Device Handlers"3. In the upper right, click "Settings"4. Add a new Github repository with Owner = "rcoodey", name = "Pilarm" and Branch = "master"
 5. In the upper right, click "Update from Repo" and choose "Pilarm"
 6. Under the "New" section, check "devicetypes/rcoodey/pilarm-zone.src/pilarm-zone.groovy", check the "Publish" box and click "Execute Update"
 7. On the top menu, click "My Devices"
@@ -19,9 +17,7 @@ For the below steps be aware that different accounts use different URLs (shards)
 9. Click "Create" and repeat for each door, window or other contact
 
 ## Setting up SmartThings SmartApp
-
-1. Browse to https://graph.api.smartthings.com/ and login with your SmartThings account
-2. On the top menu, click "My SmartApps"
+1. Browse to https://graph.api.smartthings.com/ and login with your SmartThings account2. On the top menu, click "My SmartApps"
 3. In the upper right, click "Settings"
 4. Add a new Github repository with Owner = "rcoodey", name = "Pilarm" and Branch = "master"
 5. In the upper right, click "Update from Repo" and choose "Pilarm"
@@ -58,6 +54,7 @@ There is a lot of information out there about setting up a Raspberry Pi, so just
 4. Connect the resistor to 3V3
 
 <p align="center">
+<img src="https://github.com/rcoodey/Pilarm/raw/master/images/CircuitDiagram.jpg" width="100" />
 <img src="https://github.com/rcoodey/Pilarm/raw/master/images/AlarmBox.jpg" width="100" />
 <img src="https://github.com/rcoodey/Pilarm/raw/master/images/BoardCenter.jpg" width="100" />
 <img src="https://github.com/rcoodey/Pilarm/raw/master/images/BoardLeft.jpg" width="100" />
