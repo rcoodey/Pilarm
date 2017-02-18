@@ -1,7 +1,7 @@
 # Pilarm
 Integrate existing door or window contact sensors with SmartThings using a Raspberry Pi or C.H.I.P.
 
-# A note about the different "shards"
+## A note about the different "shards"
 
 For the below steps be aware that different accounts use different URLs (shards). Please see <a href="https://community.smartthings.com/t/faq-how-to-find-out-what-shard-cloud-slice-ide-url-your-account-location-is-on/53923">FAQ: How to find out what “shard” (cloud slice IDE URL) your Account / Location is on?</a> for additional details and substitute the appropriate URL below.
 
@@ -38,10 +38,6 @@ For the below steps be aware that different accounts use different URLs (shards)
   * In the JSON formatted text search for the "label" with name "Pilarm", just before this should be the "id"
   * Save this id for later use in the Pilarm Server config
 
-## PilarmServer.py
-
-If you're not on the main na shard, you might need to edit the URL in the PilarmServer.conf to reflect this, rather than using https://graph.api.smartthings.com/
-
 ## Getting started with Raspberry Pi
 There is a lot of information out there about setting up a Raspberry Pi, so just a few high level details here.
 
@@ -73,6 +69,10 @@ There is a lot of information out there about setting up a Raspberry Pi, so just
 2. Install Python 3: sudo apt-get -y install python3
 3. Install library for working with GPIO pins: sudo apt-get -y install python3-rpi.gpio
 4. Install library for sending HTTP requests: sudo apt-get -y install python3-requests
+
+## PilarmServer.py
+
+If you're not on the main na shard, you might need to edit the URL in the PilarmServer.conf to reflect this, rather than using https://graph.api.smartthings.com/
 
 ## Setting up Pilarm Server
 1. Install Git: sudo apt-get -y install git-core
