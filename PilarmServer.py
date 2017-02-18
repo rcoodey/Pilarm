@@ -15,10 +15,11 @@ script_dir = os.path.dirname(__file__)
 config.read(os.path.join(script_dir, 'PilarmServer.conf'))
 
 #Get SmartThings settings
+smartthings_shard_url = config.get('SmartThings', 'shard_url')
 smartthings_application_id = config.get('SmartThings', 'application_id') 
 smartthings_access_token = config.get('SmartThings', 'access_token') 
 smartthings_update_frequency = int(config.get('SmartThings', 'update_frequency'))
-smartthings_event_url = "https://graph.api.smartthings.com/api/smartapps/installations/" + smartthings_application_id + "/{0}/{1}?access_token=" + smartthings_access_token 
+smartthings_event_url = "https://" + smartthings_shard_url + "/api/smartapps/installations/" + smartthings_application_id + "/{0}/{1}?access_token=" + smartthings_access_token 
 smartthings_zone_event_url = smartthings_event_url.format("pilarm", "zoneEvent/{0}/{1}") 
 smartthings_all_zones_event_url = smartthings_event_url.format("pilarm", "allZonesEvent")
 
