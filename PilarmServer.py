@@ -8,36 +8,67 @@ import logging
 import socketserver 
 import threading 
 from http.server import BaseHTTPRequestHandler
+import paho.mqtt.client as mqtt
 
 #Open configuration file
 config = configparser.ConfigParser()
 script_dir = os.path.dirname(__file__) 
 config.read(os.path.join(script_dir, 'PilarmServer.conf'))
 
-#Get SmartThings settings
-smartthings_shard_url = config.get('SmartThings', 'shard_url')
-smartthings_application_id = config.get('SmartThings', 'application_id') 
-smartthings_access_token = config.get('SmartThings', 'access_token') 
-smartthings_update_frequency = int(config.get('SmartThings', 'update_frequency'))
-smartthings_event_url = "https://" + smartthings_shard_url + "/api/smartapps/installations/" + smartthings_application_id + "/{0}/{1}?access_token=" + smartthings_access_token 
-smartthings_zone_event_url = smartthings_event_url.format("pilarm", "zoneEvent/{0}/{1}") 
-smartthings_all_zones_event_url = smartthings_event_url.format("pilarm", "allZonesEvent")
-
 #Get Pilarm settings and configure logging
 gpio_zones = list(map(int, config.get('Pilarm', 'gpio_zones').split(',')))
-log_file = config.get('Pilarm', 'log_file') 
-logging.basicConfig(filename=log_file, filemode='a', format="%(asctime)s %(levelname)s %(message)s", datefmt="%m-%d-%y %H:%M:%S", level=logging.INFO) 
+log_file = config.get('Pilarm', 'log_file')
+logging.basicConfig(filename=log_file, filemode='a', format="%(asctime)s %(levelname)s %(message)s", datefmt="%m-%d-%y %H:%M:%S", level=logging.INFO)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
+update_frequency = int(config.get('Pilarm', 'update_frequency'))
+platform = config.get('Pilarm', 'platform') #smartthings, mqtt, both
+
+def is_platform_smartthings():
+    if platform == 'smartthings' or platform == 'both':
+        return True
+    return False
+
+def is_platform_mqtt():
+    if platform == 'mqtt' or platform == 'both':
+        return True
+    return False
+
+#Get SmartThings settings
+if is_platform_smartthings():
+    smartthings_shard_url = config.get('SmartThings', 'shard_url')
+    smartthings_application_id = config.get('SmartThings', 'application_id') 
+    smartthings_access_token = config.get('SmartThings', 'access_token')
+    smartthings_event_url = "https://" + smartthings_shard_url + "/api/smartapps/installations/" + smartthings_application_id + "/{0}/{1}?access_token=" + smartthings_access_token 
+    smartthings_zone_event_url = smartthings_event_url.format("pilarm", "zoneEvent/{0}/{1}") 
+    smartthings_all_zones_event_url = smartthings_event_url.format("pilarm", "allZonesEvent")
+
+#Get MQTT setings
+if is_platform_mqtt():
+    mqtt_server = config.get('MQTT', 'server')
+    mqtt_port = int(config.get('MQTT', 'port'))
+    mqtt_username = config.get('MQTT', 'username')
+    mqtt_password = config.get('MQTT', 'password')
 
 #Handler for GPIO events
 def gpio_handler(zone):
     try:
-        requests.get(smartthings_zone_event_url.format(GPIO.input(zone), zone))
+        if is_platform_smartthings():
+            requests.get(smartthings_zone_event_url.format(GPIO.input(zone), zone))
+
+        if is_platform_mqtt():
+            mqttClient.publish('alarm/contact/' + str(zone), GPIO.input(zone))
+
         message = 'Zone ' + str(zone) + ' ' + ('opened' if GPIO.input(zone) else 'closed')
         print(message)
         logging.info(message)
     except Exception as e:
         logging.exception("Error processing GPIO event: " + str(e))
+
+#Send MQTT update for all zones
+def send_all_zones_mqtt():
+    if is_platform_mqtt():
+        for zone in gpio_zones:
+            mqttClient.publish('alarm/contact/' + str(zone), GPIO.input(zone))
 
 #Return JSON string for single zone (single option used if output will be combined with additional zones)
 def get_zone_json(zone, single = True):
@@ -56,6 +87,13 @@ def get_all_zones_json():
         else:
             json = json + ','
     return json
+
+#MQTT handlers
+def on_connect(mosq, obj, rc):
+    print("MQTT connection: " + str(rc))
+
+def on_publish(client, userdata, result):
+    print("Data published: " + str(result))
 
 #Handler to parse and respond to incoming http requests
 class GetHandler(BaseHTTPRequestHandler):
@@ -100,25 +138,40 @@ for zone in gpio_zones:
     GPIO.add_event_detect(zone, GPIO.BOTH, gpio_handler, bouncetime=200) 
 
 #Setup and start http server
-httpServer = ThreadedTCPServer(("", 80), GetHandler) 
-http_server_thread = threading.Thread(target=httpServer.serve_forever)
-http_server_thread.daemon = True 
-http_server_thread.start()
+if is_platform_smartthings():
+    httpServer = ThreadedTCPServer(("", 80), GetHandler) 
+    http_server_thread = threading.Thread(target=httpServer.serve_forever)
+    http_server_thread.daemon = True 
+    http_server_thread.start()
+
+#Setup MQTT client
+if is_platform_mqtt():
+    mqttClient = mqtt.Client("Pilarm")
+    #mqttClient.on_connect = on_connect
+    #mqttClient.on_publish = on_publish
+    mqttClient.username_pw_set(mqtt_username, mqtt_password)
+    mqttClient.connect(mqtt_server, mqtt_port)
+    mqttClient.loop_start()
 
 #Program loop to send status events to SmartThings
 logging.info('Beginning Pilarm loop') 
 while True:
     try:
         #Update all Pilarm zones on designated interval, this is an extra failsafe in the rare case a GPIO event is missed
-        requests.put(smartthings_all_zones_event_url, data=get_all_zones_json())
+        if is_platform_smartthings():
+            requests.put(smartthings_all_zones_event_url, data=get_all_zones_json())
+        if is_platform_mqtt():
+            send_all_zones_mqtt()
+
         print("All zones event")
-        
+
         #Wait for next loop
-        time.sleep(smartthings_update_frequency)
+        time.sleep(update_frequency)
     
     #Handle all errors so alarm loop does not end
     except Exception as e:
         logging.exception("Error in alarm loop: " + str(e))
+        print("Error in alarm loop: " + str(e))
 
 #Stop Pilarm    
 logging.info('Exited Pilarm loop and shutting down')
